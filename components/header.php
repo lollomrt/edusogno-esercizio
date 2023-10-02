@@ -1,3 +1,8 @@
+<?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,13 +13,24 @@
     <link rel="stylesheet" href="./assets/styles/style.css">
     <link rel="stylesheet" href="./assets/styles/header-style.css">
     <link rel="stylesheet" href="./assets/styles/main-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,400;9..40,700&display=swap" rel="stylesheet">
     <title>Edusogno</title>
 </head>
 
 <body>
     <header class="header">
-        <div class="logo-container">
-            <img src="" alt="">
-        </div>
+        <img src="./assets/img/Group_181.svg" alt="logo-edusogno">
     </header>
     <main>
+        <div class="background-images width-height-100">
+            <div class="img-composition width-height-100">
+                <img src="./assets/img/Vector_1.svg" alt="logo-edusogno">
+                <img src="./assets/img/Vector_4.svg" alt="logo-edusogno">
+                <img src="./assets/img/Vector_5.svg" alt="logo-edusogno">
+                <img src="./assets/img/Group_201.svg" alt="logo-edusogno">
+                <img src="./assets/img/Ellipse_13.svg" alt="logo-edusogno">
+                <img src="./assets/img/Ellipse_12.svg" alt="logo-edusogno">
+            </div>
+        </div>
