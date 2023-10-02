@@ -1,5 +1,6 @@
 <?php
 
+require_once('loader.php');
 $page = $_GET['page'] ?? false;
 include_once('components/header.php');
 switch( $page ){
@@ -15,5 +16,3 @@ switch( $page ){
     }
 
 include_once('components/footer.php');
-
-?>
