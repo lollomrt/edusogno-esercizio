@@ -4,7 +4,8 @@ include_once('components/header.php');
 
 ?>
 
-<h1>Registrati</h1>
+<h1>Dashboard</h1>
+
 
 <?php
 
