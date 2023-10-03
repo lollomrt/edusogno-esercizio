@@ -1,17 +1,17 @@
 <h1>Login</h1>
 
 <div class="container-form">
-    <form action="">
-        
+    <form method="POST" action="formActions/loginAction.php">
+
         <div class="field">
-            <label for="mail">Inserisci l'email</label>
-            <input type="mail" name="mail" id="mail" placeholder="name@exemple.com" required>
+            <label for="email">Inserisci l'email</label>
+            <input type="email" name="email" id="email" placeholder="name@exemple.com" required>
         </div>
         <div class="field">
             <label for="password">Inserisci la password</label>
             <input type="password" name="password" id="password" placeholder="Scrivila qui" required>
         </div>
-        <input class="btn" type="submit" value="Registrati"></input>
+        <input class="btn" type="submit" value="Login"></input>
         <div class="button-container">
             <span>Non hai ancora un profilo?</span>
             <a href="?page=register" class="btn btn-login"><strong>Registrati</strong></a>
