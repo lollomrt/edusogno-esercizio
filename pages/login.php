@@ -16,9 +16,12 @@
         </div>
         <div class="field">
             <label for="password">Inserisci la password</label>
-            <input type="password" name="password" id="password" placeholder="Scrivila qui" required>
+            <div class="password-container">
+                <input type="password" name="password" id="password" placeholder="Scrivila qui" required>
+                <i class="fa-solid fa-eye" id="eye"></i>
+            </div>
         </div>
-        <input class="btn" type="submit" value="Login"></input>
+        <input class="btn" type="submit" value="Accedi"></input>
         <div class="button-container">
             <span>Non hai ancora un profilo?</span>
             <a href="?page=register" class="btn btn-login"><strong>Registrati</strong></a>

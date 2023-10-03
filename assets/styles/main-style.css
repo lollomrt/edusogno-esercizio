@@ -95,7 +95,7 @@ main {
     display: flex;
     font-size: 20px;
     font-weight: 400;
-    color: #CCCCCC;
+    color: #000;
     border: 0;
     border-bottom: 1px solid #134077;
     padding: 10px 0;
@@ -142,4 +142,39 @@ form input[type=submit]:hover {
     background-color: transparent;
     font-size: 13px;
     text-decoration: underline;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container i {
+    position: absolute;
+    font-size: 20px;
+    top: 28%;
+    right: 3%;
+    cursor: pointer;
+    color: #0057FF;
+}
+
+.button-container {
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button-container a {
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.container-form a {
+    text-align: center;
+    color: #000;
+}
+
+.container-form a:hover,
+.container-form a:focus {
+    color: #0057FF;
 }
