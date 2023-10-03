@@ -15,11 +15,12 @@ class Connector
             // Imposta l'attributo per generare eccezioni in caso di errori
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            echo "Connessione al database riuscita!";
+            // echo "Connessione al database riuscita!";
         } catch (PDOException $e) {
             echo "Connessione al database fallita: " . $e->getMessage();
         }
     }
+
 
     public function getEvents()
     {
@@ -28,13 +29,22 @@ class Connector
         return $sth->fetchAll();
     }
 
-    public function addUser()
+    public function addUser($nome, $cognome, $email, $password)
     {
-        $sth = $this->conn->prepare("INSERT INTO 'utenti' ('nome', 'cognome', 'email', 'password') VALUES ()");
-        $sth->execute();
-        return $sth->fetchAll();
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        INSERT INTO table_name (column1, column2, column3, ...)
-VALUES (value1, value2, value3, ...);
+        $sth = $this->conn->prepare('INSERT INTO utenti (nome, cognome, email, password) VALUES (:nome, :cognome, :email, :password)');
+        $sth->bindParam(':nome', $nome);
+        $sth->bindParam(':cognome', $cognome);
+        $sth->bindParam(':email', $email);
+        $sth->bindParam(':password', $hashedPassword);
+
+        if ($sth->execute()) {
+            header('Location: dashboard.php');
+            exit;
+        } else {
+            // Errore nell'inserimento
+            return false;
+        }
     }
 }

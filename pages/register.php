@@ -1,7 +1,7 @@
 <h1>Crea il tuo account</h1>
 
 <div class="container-form">
-    <form action="">
+    <form method="POST" action="formActions/registerAction.php">
         <div class="field">
             <label for="first_name">Inserisci il nome</label>
             <input type="text" name="first_name" id="first_name" placeholder="Mario" required>
@@ -11,8 +11,8 @@
             <input type="text" name="last_name" id="last_name" placeholder="Rossi" required>
         </div>
         <div class="field">
-            <label for="mail">Inserisci l'email</label>
-            <input type="mail" name="mail" id="mail" placeholder="name@exemple.com" required>
+            <label for="email">Inserisci l'email</label>
+            <input type="email" name="email" id="email" placeholder="name@exemple.com" required>
         </div>
         <div class="field">
             <label for="password">Inserisci la password</label>
