@@ -1,5 +1,12 @@
 <h1>Login</h1>
 
+<!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
+<?php if (!empty($error_message)) : ?>
+    <div class="error-message">
+        <?php echo $error_message; ?>
+    </div>
+<?php endif; ?>
+
 <div class="container-form">
     <form method="POST" action="formActions/loginAction.php">
 

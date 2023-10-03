@@ -74,4 +74,22 @@ class Connector
 
         return false;
     }
+
+    public function getUserName($user_id)
+    {
+        // Esegui una query SQL per ottenere il nome dell'utente dal database
+        $query = "SELECT nome FROM utenti WHERE id = :user_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Estrai il nome dell'utente
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result['nome'];
+        } else {
+            return 'Nome non disponibile'; // Messaggio di fallback nel caso in cui il nome non sia disponibile
+        }
+    }
 }
