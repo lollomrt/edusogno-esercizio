@@ -178,3 +178,7 @@ form input[type=submit]:hover {
 .container-form a:focus {
     color: #0057FF;
 }
+
+.error-message {
+    color: #fe4547;
+}

@@ -68,7 +68,7 @@ class Connector
         // Si ottiene il risultato della query come array associativo
         $user = $sth->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && $user['password'] == password_verify($password, $hashedPassword)) {
+        if ($user && password_verify($password, $user['password'])) {
             return $user;
         }
 

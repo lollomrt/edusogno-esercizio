@@ -1,3 +1,17 @@
+<?php
+require_once 'loader.php';
+session_start();
+
+// Verifica se esiste una variabile di sessione 'error_message'
+if (isset($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message'];
+    // Rimuovi la variabile di sessione dopo averla utilizzata
+    unset($_SESSION['error_message']);
+} else {
+    $error_message = "";
+}
+?>
+
 <h1>Login</h1>
 
 <!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
