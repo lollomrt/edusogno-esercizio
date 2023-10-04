@@ -89,7 +89,7 @@ class Connector
     public function getUserName($user_id)
     {
         // Esegui una query SQL per ottenere il nome dell'utente dal database
-        $query = "SELECT nome FROM utenti WHERE id = :user_id";
+        $query = "SELECT nome, cognome FROM utenti WHERE id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -98,7 +98,7 @@ class Connector
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            return $result['nome'];
+            return $result['nome'] . ' ' . $result['cognome'];
         } else {
             return 'Nome non disponibile'; // Messaggio di fallback nel caso in cui il nome non sia disponibile
         }
