@@ -103,4 +103,18 @@ class Connector
             return 'Nome non disponibile'; // Messaggio di fallback nel caso in cui il nome non sia disponibile
         }
     }
+
+    public function getUserEventsByEmail($user_email)
+    {
+        // Esegui una query SQL per selezionare tutti gli eventi in cui l'utente è un partecipante
+        $query = "SELECT * FROM eventi WHERE FIND_IN_SET(:user_email, attendees) > 0";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':user_email', $user_email);
+        $stmt->execute();
+
+        // Estrai tutti gli eventi
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $events;
+    }
 }

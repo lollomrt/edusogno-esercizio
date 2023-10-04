@@ -29,7 +29,10 @@ if (isset($_SESSION['error_message'])) {
             <input type="email" name="email" id="email" placeholder="name@exemple.com" required>
         </div>
         <div class="field">
-            <label for="password">Inserisci la password</label>
+            <div class="pass-label-container">
+                <label for="password">Inserisci la password</label>
+                <a href="#" class="btn btn-login"><strong>Password dimenticata?</strong></a>
+            </div>
             <div class="password-container">
                 <input type="password" name="password" id="password" placeholder="Scrivila qui" required>
                 <i class="fa-solid fa-eye" id="eye"></i>
