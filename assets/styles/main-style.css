@@ -186,6 +186,10 @@ form input[type=submit]:hover,
     color: #fe4547;
 }
 
+.success-message {
+    color: #0057FF;
+}
+
 .container-eventi {
     margin: 40px 0;
     width: 80%;
