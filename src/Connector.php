@@ -55,6 +55,17 @@ class Connector
         }
     }
 
+    public function isUserExists($email)
+    {
+        $sth = $this->conn->prepare("SELECT COUNT(*) FROM utenti WHERE email = :email");
+        $sth->bindParam(':email', $email);
+        $sth->execute();
+
+        $count = $sth->fetchColumn();
+
+        return $count > 0; // Restituisce true se l'utente esiste già, altrimenti false
+    }
+
     public function getUser($email, $password)
     {
         var_dump($email, $password);

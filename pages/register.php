@@ -1,4 +1,25 @@
+<?php
+require_once 'loader.php';
+session_start();
+
+// Verifica se esiste una variabile di sessione 'error_message'
+if (isset($_SESSION['error_message'])) {
+    $error_message = $_SESSION['error_message'];
+    // Rimuovi la variabile di sessione dopo averla utilizzata
+    unset($_SESSION['error_message']);
+} else {
+    $error_message = "";
+}
+?>
+
 <h1>Crea il tuo account</h1>
+
+<!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
+<?php if (!empty($error_message)) : ?>
+    <div class="error-message">
+        <?php echo $error_message; ?>
+    </div>
+<?php endif; ?>
 
 <div class="container-form">
     <form method="POST" action="formActions/registerAction.php">
