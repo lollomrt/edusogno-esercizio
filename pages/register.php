@@ -38,8 +38,8 @@ if (isset($_SESSION['error_message'])) {
         <div class="field">
             <label for="password">Inserisci la password</label>
             <div class="password-container">
-                <input type="password" name="password" id="password" placeholder="Scrivila qui" required>
-                <i class="fa-solid fa-eye" id="eye"></i>
+                <input type="password" name="password" class="password-input" placeholder="Scrivila qui" required>
+                <i class="fa-solid fa-eye toggle-password-visibility" id="eye"></i>
             </div>
         </div>
         <input class="btn" type="submit" value="Registrati"></input>

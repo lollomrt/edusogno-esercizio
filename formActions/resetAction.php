@@ -5,7 +5,6 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require_once '../loader.php';
-require_once '../vendor/autoload.php';
 
 session_start();
 
@@ -19,8 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"]
 
     // Verifica se l'utente esiste nel database
     if ($connector->isUserExists($email)) {
-        // Configurazione delle credenziali SMTP di Mailtrap utilizzando le variabili dichiarate in loader.php
-        $mail = new PHPMailer(true); // Usa 'true' per abilitare le eccezioni
+
+        $token = bin2hex(random_bytes(32)); // Esempio di generazione di un token
+
+        // Imposta la data di scadenza del token (ad esempio, 1 ora dalla generazione)
+        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+15 minutes'));
+
+        // Salva il token nel database associato all'utente
+        $connector->storePasswordResetToken($email, $token, $tokenExpiry);
+
+        // Costruisco l'url contenuto nella mail
+        $resetUrl = APP_URL . "?page=new_password&token=$token";
+
+        // Configura le credenziali SMTP di Mailtrap utilizzando le variabili dichiarate in loader.php
+        $mail = new PHPMailer();
 
         $mail->isSMTP();
         $mail->Host = $mailtrapHost;
@@ -35,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"]
 
         // Imposta il soggetto e il corpo del messaggio
         $mail->Subject = "Reset della password";
-        $mail->Body = "Clicca su questo link per reimpostare la tua password: http://example.com/reset_password.php"; // Sostituisci con il link corretto
+        $mail->Body = "Clicca su questo link per reimpostare la tua password: $resetUrl"; // Sostituisci con il link corretto
 
         // Invia l'email
         if ($mail->send()) {

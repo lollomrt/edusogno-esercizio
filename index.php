@@ -13,6 +13,9 @@ switch ($page) {
     case 'password_reset':
         include('pages/password_reset.php');
         break;
+    case 'new_password':
+        include('pages/new_password.php');
+        break;
     default:
         include('pages/register.php');
         break;

@@ -1,16 +1,23 @@
-const passwordInput = document.querySelector("#password")
-const eye = document.querySelector("#eye")
+const passwordInputs = document.querySelectorAll(".password-input");
+const toggleButtons = document.querySelectorAll(".toggle-password-visibility");
 
-eye.addEventListener("click", function () {
+toggleButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+        togglePasswordVisibility(index);
+    });
+});
+
+function togglePasswordVisibility(index) {
+    const passwordInput = passwordInputs[index];
     const isPasswordVisible = passwordInput.getAttribute("type") === "text";
 
     if (isPasswordVisible) {
         passwordInput.setAttribute("type", "password");
-        eye.classList.remove("fa-eye-slash");
-        eye.classList.add("fa-eye");
+        toggleButtons[index].classList.remove("fa-eye-slash");
+        toggleButtons[index].classList.add("fa-eye");
     } else {
         passwordInput.setAttribute("type", "text");
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
+        toggleButtons[index].classList.remove("fa-eye");
+        toggleButtons[index].classList.add("fa-eye-slash");
     }
-});
+}

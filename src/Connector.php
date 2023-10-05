@@ -117,4 +117,32 @@ class Connector
 
         return $events;
     }
+
+    public function storePasswordResetToken($email, $token, $tokenExpiry)
+    {
+        try {
+            // Prepara la query SQL per l'inserimento del token di reset
+            $sql = "INSERT INTO password_reset_tokens (user_email, token, expiry) VALUES (:email, :token, :expiry)";
+            $stmt = $this->conn->prepare($sql);
+
+            // Esegui l'inserimento dei dati
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':token', $token);
+            $stmt->bindParam(':expiry', $tokenExpiry);
+
+            if ($stmt->execute()) {
+                return true; // Restituisci true se l'inserimento ha avuto successo
+            } else {
+                // Errore nell'inserimento
+                echo "\nPDOStatement::errorInfo():\n";
+                $arr = $stmt->errorInfo();
+                print_r($arr);
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Gestisci eventuali errori di connessione al database
+            echo "Errore di connessione al database: " . $e->getMessage();
+            return false;
+        }
+    }
 }
