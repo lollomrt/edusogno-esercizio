@@ -21,7 +21,9 @@ if (isset($_SESSION['success_message'])) {
 }
 ?>
 
-<h1>Crea la tua nuova password</h1>
+<div class="page-title">
+    <h1>Crea la tua nuova password</h1>
+</div>
 
 <!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
 <?php if (!empty($error_message)) : ?>

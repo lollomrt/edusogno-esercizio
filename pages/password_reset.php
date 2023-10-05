@@ -21,7 +21,9 @@ if (isset($_SESSION['success_message'])) {
 }
 ?>
 
-<h1>Resetta la tua password</h1>
+<div class="page-title">
+    <h1>Resetta la tua password</h1>
+</div>
 
 <!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
 <?php if (!empty($error_message)) : ?>
@@ -42,7 +44,7 @@ if (isset($_SESSION['success_message'])) {
             <label for="email">Inserisci l'email</label>
             <input type="email" name="email" id="email" placeholder="name@exemple.com" required>
         </div>
-        <input class="btn" name="reset-request-submit" type="submit" value="Invia il link per il reset"></input>
+        <input class="btn" name="reset-request-submit" type="submit" value="Invia il link"></input>
         <div class="button-container">
             <span>Non hai ancora un profilo?</span>
             <a href="?page=register" class="btn btn-login"><strong>Registrati</strong></a>

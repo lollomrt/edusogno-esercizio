@@ -64,6 +64,14 @@ main {
     z-index: 2;
 }
 
+.page-title {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .container-form,
 .no-event-container {
     width: 50%;
@@ -208,6 +216,7 @@ form input[type=submit]:hover,
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 20px;
 }
 
@@ -260,4 +269,51 @@ form input[type=submit]:hover,
 
 .container-form .btn-classic:hover {
     color: #fff;
+}
+
+.pass-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 992px) {
+
+    .evento {
+        width: calc(100% / 2 - 30px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .container-form,
+    .container-eventi,
+    .success-message,
+    .error-message {
+        width: 90%;
+    }
+
+    .page-title {
+        width: 90%;
+    }
+
+    .no-event-container {
+        width: 100%;
+    }
+
+    .evento {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .pass-mobile {
+        display: block;
+    }
+
+    .pass-label-container a {
+        display: none;
+    }
+
+    .container-form a.pass-mobile {
+        text-align: right;
+    }
 }

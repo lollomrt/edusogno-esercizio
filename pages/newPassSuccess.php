@@ -12,7 +12,9 @@ if (isset($_SESSION['success_message'])) {
 }
 ?>
 
-<h1>Fatto!</h1>
+<div class="page-title">
+    <h1>Fatto!</h1>
+</div>
 
 <div class="container-form container-classic">
     <?php if (!empty($success_message)) : ?>

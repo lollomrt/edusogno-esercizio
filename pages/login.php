@@ -12,7 +12,10 @@ if (isset($_SESSION['error_message'])) {
 }
 ?>
 
-<h1>Login</h1>
+<div class="page-title">
+    <h1>Login</h1>
+</div>
+
 
 <!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
 <?php if (!empty($error_message)) : ?>
@@ -37,6 +40,7 @@ if (isset($_SESSION['error_message'])) {
                 <input type="password" name="password" class="password-input" placeholder="Scrivila qui" required>
                 <i class="fa-solid fa-eye toggle-password-visibility" id="eye"></i>
             </div>
+            <a href="?page=password_reset" class="btn btn-login pass-mobile"><strong>Password dimenticata?</strong></a>
         </div>
         <input class="btn" type="submit" value="Accedi"></input>
         <div class="button-container">

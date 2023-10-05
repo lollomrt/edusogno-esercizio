@@ -23,8 +23,9 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
 
 ?>
 
-
-<h1>Ciao <?php echo $user_name; ?>, ecco i tuoi eventi</h1>
+<div class="page-title">
+    <h1>Ciao <?php echo $user_name; ?>, ecco i tuoi eventi</h1>
+</div>
 
 <div class="container-eventi">
     <?php if (!empty($no_events_message)) : ?>
@@ -35,8 +36,10 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         <!-- Ciclo per visualizzare gli eventi -->
         <?php foreach ($user_events as $event) : ?>
             <div class="evento">
-                <h2><?php echo $event['nome_evento']; ?></h2>
-                <p>Data: <?php echo $event['data_evento']; ?></p>
+                <div class="intestazione">
+                    <h2><?php echo $event['nome_evento']; ?></h2>
+                    <p>Data: <?php echo $event['data_evento']; ?></p>
+                </div>
                 <a href="#" class="btn btn-evento"><strong>Join</strong></a>
             </div>
         <?php endforeach; ?>
