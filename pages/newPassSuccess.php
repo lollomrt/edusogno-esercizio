@@ -1,15 +1,9 @@
 <?php
 require_once 'loader.php';
-session_start();
+$session = new Session;
 
 // Verifica se esiste una variabile di sessione 'success_message' per i messaggi di successo
-if (isset($_SESSION['success_message'])) {
-    $success_message = $_SESSION['success_message'];
-    // Rimuovi la variabile di sessione dopo averla utilizzata
-    unset($_SESSION['success_message']);
-} else {
-    $success_message = "";
-}
+$success_message = $session->getSuccessMessage();
 ?>
 
 <div class="page-title">

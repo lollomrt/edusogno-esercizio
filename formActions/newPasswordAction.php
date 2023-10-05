@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once '../loader.php';
 
-session_start();
+$session = new Session;
 
 // Controllo se c'è una richiesta in post e se viene dal form con name corretto sul submit - Utente che entra correttamente nella pagina.
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-password-submit"])) {
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-password-submit"
 
     // Valida che le due password corrispondano
     if ($newPassword !== $confirmNewPassword) {
-        $_SESSION['error_message'] = "Le password non corrispondono.";
+        $session->setErrorMessage("Le password non corrispondono.");
         header("Location: " . APP_URL . "?page=new_password&token=" . $token);
         exit();
     }
@@ -33,11 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-password-submit"
         // Invalida il token
         $connector->invalidatePasswordResetToken($token);
 
-        $_SESSION['success_message'] = "La password è stata reimpostata con successo. Ora puoi loggarti.";
+        $session->setSuccessMessage("La password è stata reimpostata con successo. Ora puoi loggarti.");
         header("Location: " . APP_URL . "?page=newPassSuccess");
         exit();
     } else {
-        $_SESSION['error_message'] = "Il link di reset non è valido o è scaduto.";
+        $session->setErrorMessage("Il link di reset non è valido o è scaduto.");
         header("Location: " . APP_URL . "?page=new_password&token=" . $token);
         exit();
     }

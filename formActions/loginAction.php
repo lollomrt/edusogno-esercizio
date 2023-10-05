@@ -2,29 +2,21 @@
 
 require_once '../loader.php';
 
-session_start();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Crea un'istanza di Connector e imposta la connessione al database
-    $connector = new Connector();
-    $connector->setUpConnection();
+
+    $session = new Session;
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $user = $connector->getUser($email, $password);
+    $check = $session->setUserSession($email, $password);
 
-    if ($user) {
-        // Accesso riuscito, memorizza le informazioni dell'utente nella sessione
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_email'] = $user['email'];
-
+    if ($check) {
         header("Location: " . APP_URL . "?page=dashboard");
         exit();
     } else {
         // Accesso fallito, mostra un messaggio di errore
-        $error_message = "Credenziali non valide. Riprova.";
-        $_SESSION['error_message'] = $error_message;
+        $session->setErrorMessage("Credenziali non valide. Riprova.");
         header("Location: " . APP_URL . "?page=login");
         exit();
     }

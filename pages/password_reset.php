@@ -1,24 +1,12 @@
 <?php
 require_once 'loader.php';
-session_start();
+$session = new Session;
 
 // Verifica se esiste una variabile di sessione 'error_message'
-if (isset($_SESSION['error_message'])) {
-    $error_message = $_SESSION['error_message'];
-    // Rimuovi la variabile di sessione dopo averla utilizzata
-    unset($_SESSION['error_message']);
-} else {
-    $error_message = "";
-}
+$error_message = $session->getErrorMessage();
 
 // Verifica se esiste una variabile di sessione 'success_message' per i messaggi di successo
-if (isset($_SESSION['success_message'])) {
-    $success_message = $_SESSION['success_message'];
-    // Rimuovi la variabile di sessione dopo averla utilizzata
-    unset($_SESSION['success_message']);
-} else {
-    $success_message = "";
-}
+$success_message = $session->getSuccessMessage();
 ?>
 
 <div class="page-title">

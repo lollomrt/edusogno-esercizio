@@ -118,8 +118,15 @@ class Connector
         return $events;
     }
 
-    public function storePasswordResetToken($email, $token, $tokenExpiry)
+    public function createPasswordResetToken($email)
     {
+
+        $token = bin2hex(random_bytes(32)); // Esempio di generazione di un token
+
+        date_default_timezone_set('Europe/Rome');
+
+        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+15 minutes'));
+
         try {
             // Prepara la query SQL per l'inserimento del token di reset
             $sql = "INSERT INTO password_reset_tokens (user_email, token, expiry) VALUES (:email, :token, :expiry)";
@@ -131,7 +138,7 @@ class Connector
             $stmt->bindParam(':expiry', $tokenExpiry);
 
             if ($stmt->execute()) {
-                return true; // Restituisci true se l'inserimento ha avuto successo
+                return $token; // Restituisci true se l'inserimento ha avuto successo
             } else {
                 // Errore nell'inserimento
                 echo "\nPDOStatement::errorInfo():\n";

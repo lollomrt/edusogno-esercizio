@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require_once '../loader.php';
 
-session_start();
+$session = new Session;
 
 // Controllo se c'è una richiesta in post e se viene dal form con name corretto sul submit - Utente che entra correttamente nella pagina.
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"])) {
@@ -19,14 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"]
     // Verifica se l'utente esiste nel database
     if ($connector->isUserExists($email)) {
 
-        $token = bin2hex(random_bytes(32)); // Esempio di generazione di un token
-
-        date_default_timezone_set('Europe/Rome');
-
-        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+15 minutes'));
-
         // Salva il token nel database associato all'utente
-        $connector->storePasswordResetToken($email, $token, $tokenExpiry);
+        $token = $connector->createPasswordResetToken($email);
 
         // Costruisco l'url contenuto nella mail
         $resetUrl = APP_URL . "?page=new_password&token=$token";
@@ -51,20 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"]
 
         // Invia l'email
         if ($mail->send()) {
-            $_SESSION['success_message'] = "Controlla la tua casella di posta per il link di reset della password!";
-            header("Location: " . APP_URL . "?page=password_reset");
-            exit();
+            $session->setSuccessMessage("Controlla la tua casella di posta per il link di reset della password!");
         } else {
-            $_SESSION['error_message'] = "Errore nell'invio dell'email. Riprova più tardi.";
-            header("Location: " . APP_URL . "?page=password_reset");
-            exit();
+            $session->setErrorMessage("Errore nell'invio dell'email. Riprova più tardi.");
         }
     } else {
         // L'utente non esiste nel database, memorizza un messaggio di errore nella variabile di sessione
-        $_SESSION['error_message'] = "L'utente con questa email non esiste. Riprova con un'altra email o procedi con la registrazione.";
-        header("Location: " . APP_URL . "?page=password_reset");
-        exit();
+        $session->setErrorMessage("L'utente con questa email non esiste. Riprova con un'altra email o procedi con la registrazione.");
     }
+    header("Location: " . APP_URL . "?page=password_reset");
+    exit();
 } else {
     header("Location: " . APP_URL . "?page=login");
+    exit();
 }

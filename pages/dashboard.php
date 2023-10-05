@@ -2,29 +2,20 @@
 
 require_once 'loader.php';
 
-session_start();
+$session = new Session;
 $connector = new Connector();
 $connector->setUpConnection();
 
+$user = $session->getUserSession();
 // Verifica se l'utente è esiste ed è loggato
-if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
-    $user_id = $_SESSION['user_id'];
-    $user_email = $_SESSION['user_email'];
-
-    $user_name = $connector->getUserName($user_id);
-    $user_events = $connector->getUserEventsByEmail($user_email);
-    if (empty($user_events)) {
-        $no_events_message = "Nessun evento disponibile al momento.";
-    }
-} else {
+if ($user == false) {
     header("Location: index.php");
     exit();
 }
-
 ?>
 
 <div class="page-title">
-    <h1>Ciao <?php echo $user_name; ?>, ecco i tuoi eventi</h1>
+    <h1>Ciao <?php echo $user['name']; ?>, ecco i tuoi eventi</h1>
 </div>
 
 <div class="container-eventi">
@@ -34,7 +25,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
         </div>
     <?php else : ?>
         <!-- Ciclo per visualizzare gli eventi -->
-        <?php foreach ($user_events as $event) : ?>
+        <?php foreach ($user['events'] as $event) : ?>
             <div class="evento">
                 <div class="intestazione">
                     <h2><?php echo $event['nome_evento']; ?></h2>
