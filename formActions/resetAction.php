@@ -21,7 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"]
 
         $token = bin2hex(random_bytes(32)); // Esempio di generazione di un token
 
-        // Imposta la data di scadenza del token (ad esempio, 1 ora dalla generazione)
+        date_default_timezone_set('Europe/Rome');
+
         $tokenExpiry = date('Y-m-d H:i:s', strtotime('+15 minutes'));
 
         // Salva il token nel database associato all'utente
@@ -46,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reset-request-submit"]
 
         // Imposta il soggetto e il corpo del messaggio
         $mail->Subject = "Reset della password";
-        $mail->Body = "Clicca su questo link per reimpostare la tua password: $resetUrl"; // Sostituisci con il link corretto
+        $mail->Body = "Clicca su questo link per reimpostare la tua password: <a href=" . "$resetUrl" . " </a>"; // Sostituisci con il link corretto
 
         // Invia l'email
         if ($mail->send()) {

@@ -134,7 +134,8 @@ form input[type=submit],
 }
 
 form input[type=submit]:hover,
-.btn-evento:hover {
+.btn-evento:hover,
+.container-form .btn-classic:hover {
     background-color: #000;
     cursor: pointer;
     transition: background-color 200ms linear;
@@ -235,4 +236,28 @@ form input[type=submit]:hover,
 .pass-label-container {
     display: flex;
     justify-content: space-between;
+}
+
+.container-classic {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.container-form .btn-classic {
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #0057FF;
+    color: #fff;
+    padding: 20px;
+    width: 100%;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.container-form .btn-classic:hover {
+    color: #fff;
 }

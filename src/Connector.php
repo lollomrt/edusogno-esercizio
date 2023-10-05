@@ -145,4 +145,43 @@ class Connector
             return false;
         }
     }
+
+    public function isValidPasswordResetToken($token)
+    {
+        // Verifica se il token è valido e non scaduto
+        $query = "SELECT * FROM password_reset_tokens WHERE token = :token AND expiry >= NOW()";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
+    }
+
+    public function updatePasswordUsingToken($token, $newPassword)
+    {
+        // Recupera l'ID dell'utente associato al token
+        $query = "SELECT user_email FROM password_reset_tokens WHERE token = :token";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $email = $result['user_email'];
+
+        // Aggiorna la password dell'utente nel database
+        $hashedPassword = $this->hashPassword($newPassword);
+        $query = "UPDATE utenti SET password = :password WHERE email = :user_email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':user_email', $email);
+        $stmt->execute();
+    }
+
+    public function invalidatePasswordResetToken($token)
+    {
+        // Invalida il token rendendolo scaduto (puoi anche rimuoverlo dal database)
+        $query = "UPDATE password_reset_tokens SET expiry = NOW() WHERE token = :token";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+    }
 }
