@@ -34,6 +34,35 @@ class Connector
         return $sth->fetchAll();
     }
 
+    public function insertEvent($attendees, $eventName, $eventDate)
+    {
+        try {
+            // Prepara la query SQL per l'inserimento dell'evento
+            $query = "INSERT INTO eventi (attendees, nome_evento, data_evento) VALUES (:attendees, :nome_evento, :data_evento)";
+
+            // Prepara la dichiarazione SQL
+            $stmt = $this->conn->prepare($query);
+
+            // Associa i parametri
+            $stmt->bindParam(":attendees", $attendees);
+            $stmt->bindParam(":nome_evento", $eventName);
+            $stmt->bindParam(":data_evento", $eventDate);
+
+            // Esegui la query
+            $stmt->execute();
+
+            // Verifica se l'inserimento è riuscito
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                throw new Exception("Errore nell'inserimento dell'evento nel database.");
+            }
+        } catch (PDOException $e) {
+            // Gestisci l'errore in modo appropriato
+            throw new Exception("Errore nell'aggiunta dell'evento: " . $e->getMessage());
+        }
+    }
+
     private function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
@@ -73,8 +102,7 @@ class Connector
 
     public function getUser($email, $password)
     {
-        var_dump($email, $password);
-        var_dump($this->hashPassword($password));
+
         $hashedPassword = $this->hashPassword($password);
 
         $sth = $this->conn->prepare("SELECT * FROM utenti WHERE email = :email");
@@ -124,6 +152,23 @@ class Connector
             return $result['admin'];
         } else {
             return 'Admin non disponibile'; // Messaggio di fallback nel caso in cui il nome non sia disponibile
+        }
+    }
+
+    public function getAllUsers()
+    {
+        // Esegui una query SQL per ottenere il nome dell'utente dal database
+        $query = "SELECT * FROM utenti";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        // Estrai il nome dell'utente
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        } else {
+            return 'Non ci sono utenti disponibile'; // Messaggio di fallback nel caso in cui il nome non sia disponibile
         }
     }
 

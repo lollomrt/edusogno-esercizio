@@ -21,3 +21,27 @@ function togglePasswordVisibility(index) {
         toggleButtons[index].classList.add("fa-eye-slash");
     }
 }
+
+// Script per la gestione dell'apertura7chiusura popup dasboard
+
+// Funzione per aprire il popup
+function openPopup() {
+    document.getElementById("popup-crea-evento").style.display = "flex";
+}
+
+// Funzione per chiudere il popup
+function closePopup() {
+    document.getElementById("popup-crea-evento").style.display = "none";
+}
+
+// Ascolta il clic sul pulsante "Crea evento" e apri il popup
+document.getElementById("crea-evento-button").addEventListener("click", function (event) {
+    event.preventDefault(); // Impedisce il comportamento predefinito del link
+    openPopup();
+});
+
+// Ascolta il clic sul pulsante di chiusura del popup
+document.getElementById("popup-close-button").addEventListener("click", function (event) {
+    event.preventDefault();
+    closePopup();
+});

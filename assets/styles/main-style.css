@@ -72,6 +72,12 @@ main {
     text-align: center;
 }
 
+.page-title.admin-flex {
+    width: 80%;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 .container-form,
 .no-event-container {
     width: 50%;
@@ -143,7 +149,9 @@ form input[type=submit],
 
 form input[type=submit]:hover,
 .btn-evento:hover,
-.container-form .btn-classic:hover {
+.container-form .btn-classic:hover,
+.button-list .btn-classic:hover,
+.admin-flex .btn-classic:hover {
     background-color: #000;
     cursor: pointer;
     transition: background-color 200ms linear;
@@ -255,16 +263,20 @@ form input[type=submit]:hover,
     gap: 20px;
 }
 
-.container-form .btn-classic {
+.btn-classic {
     font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
-    background-color: #0057FF;
-    color: #fff;
     padding: 20px;
     width: 100%;
     border-radius: 20px;
     text-decoration: none;
+}
+
+.container-form .btn-classic {
+    background-color: #0057FF;
+    color: #fff;
+    width: 100%;
 }
 
 .container-form .btn-classic:hover {
@@ -273,6 +285,136 @@ form input[type=submit]:hover,
 
 .pass-mobile {
     display: none;
+}
+
+.lista-partecipanti {
+    padding: 20px;
+    background-color: #d9e5f3;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.lista-partecipanti ul p {
+    font-size: 14px;
+    color: #000;
+}
+
+.lista-partecipanti ul {
+    list-style-type: disc;
+}
+
+.lista-partecipanti li {
+    margin-left: 20px;
+}
+
+.lista-partecipanti li::marker {
+    color: #0057FF;
+}
+
+.button-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.button-list .btn-classic:hover i {
+    color: #fff;
+}
+
+.btn-classic.modifica,
+.btn-classic.elimina,
+.popup-close {
+    font-size: 16px;
+    padding: 10px;
+    width: initial;
+    width: 40px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modifica {
+    background-color: #fedd56;
+    color: #000;
+}
+
+.elimina {
+    background-color: #fe4547;
+    color: #fff;
+}
+
+.crea-evento {
+    border: 1px dashed #134077;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-flex .btn-classic {
+    background-color: #0057FF;
+    padding: 10px 20px;
+    color: #fff;
+    width: initial;
+    white-space: nowrap;
+}
+
+.admin-flex h1 {
+    text-align: left;
+}
+
+#popup-crea-evento {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    display: none;
+}
+
+.popup {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0008;
+}
+
+.popup-intestazione {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-close {
+    background-color: #d9e5f3;
+    font-size: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.select-label {
+    display: flex;
+    padding: 10px 20px;
+    background-color: #d9e5f3;
+    gap: 5px;
+    border-radius: 20px;
+}
+
+.select-label input {
+    width: initial;
+}
+
+.checkbox-container {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+input[type="checkbox"]:checked label.select-label {
+    background-color: red;
+    /* Aggiungi altri stili di design desiderati */
 }
 
 @media screen and (max-width: 992px) {
@@ -315,5 +457,13 @@ form input[type=submit]:hover,
 
     .container-form a.pass-mobile {
         text-align: right;
+    }
+
+    .admin-flex h1 {
+        text-align: center;
+    }
+
+    .page-title.admin-flex {
+        flex-direction: column;
     }
 }
