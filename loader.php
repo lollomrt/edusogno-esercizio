@@ -10,3 +10,5 @@ require_once 'vendor/autoload.php';
 define('APP_URL', 'http://localhost/Boolean/edusogno-esercizio/');
 require_once('src/Connector.php');
 require_once('src/Session.php');
+require_once('src/Event.php');
+require_once('src/EventController.php');

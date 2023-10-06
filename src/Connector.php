@@ -22,9 +22,14 @@ class Connector
     }
 
 
-    public function getEvents()
+    public function getEvents($email = false)
     {
-        $sth = $this->conn->prepare("SELECT * FROM eventi");
+        if (!$email) {
+            $sth = $this->conn->prepare("SELECT * FROM eventi");
+        } else {
+            $sth = $this->conn->prepare("SELECT * FROM eventi WHERE FIND_IN_SET(:user_email, attendees) > 0");
+            $sth->bindParam(':user_email', $email);
+        }
         $sth->execute();
         return $sth->fetchAll();
     }
@@ -104,19 +109,24 @@ class Connector
         }
     }
 
-    public function getUserEventsByEmail($user_email)
+    public function getUserADmin($user_id)
     {
-        // Esegui una query SQL per selezionare tutti gli eventi in cui l'utente è un partecipante
-        $query = "SELECT * FROM eventi WHERE FIND_IN_SET(:user_email, attendees) > 0";
+        // Esegui una query SQL per ottenere il nome dell'utente dal database
+        $query = "SELECT admin FROM utenti WHERE id = :user_id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':user_email', $user_email);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Estrai tutti gli eventi
-        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Estrai il nome dell'utente
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $events;
+        if ($result) {
+            return $result['admin'];
+        } else {
+            return 'Admin non disponibile'; // Messaggio di fallback nel caso in cui il nome non sia disponibile
+        }
     }
+
 
     public function createPasswordResetToken($email)
     {

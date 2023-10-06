@@ -19,6 +19,9 @@ switch ($page) {
     case 'newPassSuccess':
         include('pages/newPassSuccess.php');
         break;
+    case 'adminDashboard':
+        include('pages/adminDashboard.php');
+        break;
     default:
         include('pages/register.php');
         break;

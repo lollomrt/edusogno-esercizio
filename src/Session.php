@@ -7,13 +7,6 @@ class Session
         session_start();
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param string $email
-     * @param string $password
-     * @return bool
-     */
     public function setUserSession($email, $password)
     {
         // Crea un'istanza di Connector e imposta la connessione al database
@@ -45,9 +38,8 @@ class Session
 
             $user['id'] = $_SESSION['user_id'];
             $user['email'] = $_SESSION['user_email'];
-
+            $user['admin'] = $connector->getUserADmin($user['id']);
             $user['name'] = $connector->getUserName($user['id']);
-            $user['events'] = $connector->getUserEventsByEmail($user['email']);
         }
 
         return $user;

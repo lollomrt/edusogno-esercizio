@@ -7,11 +7,22 @@ $connector = new Connector();
 $connector->setUpConnection();
 
 $user = $session->getUserSession();
+
+$eventController = new EventController($connector);
+// $events = $eventController->list();
+
 // Verifica se l'utente è esiste ed è loggato
 if ($user == false) {
     header("Location: index.php");
     exit();
+} else {
+    if ($user['admin'] == 0) {
+        $events = $eventController->list($user['email']);
+    } else {
+        $events = $eventController->list();
+    }
 }
+
 ?>
 
 <div class="page-title">
@@ -25,11 +36,18 @@ if ($user == false) {
         </div>
     <?php else : ?>
         <!-- Ciclo per visualizzare gli eventi -->
-        <?php foreach ($user['events'] as $event) : ?>
+        <?php foreach ($events as $event) : ?>
             <div class="evento">
                 <div class="intestazione">
-                    <h2><?php echo $event['nome_evento']; ?></h2>
-                    <p>Data: <?php echo $event['data_evento']; ?></p>
+                    <h2><?php echo $event->name; ?></h2>
+                    <p>Data: <?php echo $event->date; ?></p>
+                    <?php foreach ($event->attendees as $attendee) : ?>
+                        <div class="attendee">
+                            <div class="intestazione">
+                                <p><?php echo $attendee; ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
                 <a href="#" class="btn btn-evento"><strong>Join</strong></a>
             </div>
