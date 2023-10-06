@@ -25,7 +25,8 @@ function togglePasswordVisibility(index) {
 // Script per la gestione dell'apertura7chiusura popup dasboard
 
 // Funzione per aprire il popup e impostare il contenuto in base all'azione
-function openPopup(action) {
+function openPopup(action, eventId) {
+    console.log('ID dell\'evento:', eventId);
     let popup = document.getElementById('popup-dashboard');
     let creaEventoDiv = document.getElementById('popup-crea-evento');
     let eliminaEventoDiv = document.getElementById('popup-elimina-evento');
@@ -41,6 +42,8 @@ function openPopup(action) {
             creaEventoDiv.style.display = 'block';
             break;
         case 'elimina':
+            // Imposta l'ID dell'evento nel modulo di eliminazione
+            document.querySelector('#popup-elimina-evento input[name="event_id"]').value = eventId;
             eliminaEventoDiv.style.display = 'block';
             break;
         case 'modifica':
@@ -67,10 +70,11 @@ actionButtons.forEach(function (button) {
     button.addEventListener('click', function (event) {
         event.preventDefault(); // Evita il comportamento predefinito del link
         let action = this.getAttribute('data-action');
+        let eventId = this.getAttribute('data-event-id'); // Ottieni l'ID dell'evento
         if (action === 'chiudi') {
             closePopup();
         } else {
-            openPopup(action);
+            openPopup(action, eventId); // Passa l'ID dell'evento alla funzione openPopup
         }
     });
 });

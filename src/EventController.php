@@ -20,7 +20,7 @@ class EventController
             foreach ($dbEvents as $dbEvent) {
 
                 $attendees = explode(',', $dbEvent['attendees']);
-                $events[] = new Event($attendees, $dbEvent['nome_evento'], $dbEvent['data_evento']);
+                $events[] = new Event($dbEvent['id'], $attendees, $dbEvent['nome_evento'], $dbEvent['data_evento']);
             }
 
             return $events;

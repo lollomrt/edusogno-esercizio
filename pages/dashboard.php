@@ -66,6 +66,7 @@ $success_message = $session->getSuccessMessage();
             <div class="evento">
                 <div class="intestazione">
                     <h2><?php echo $event->name; ?></h2>
+
                     <p>Data: <?php echo $event->date; ?></p>
                     <?php if ($user['admin'] == 1) : ?>
                         <div class="lista-partecipanti">
@@ -84,7 +85,7 @@ $success_message = $session->getSuccessMessage();
                 <?php if ($user['admin'] == 1) : ?>
                     <div class="lista-partecipanti button-list">
                         <a href="#" class="btn-classic modifica" data-action="modifica"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="#" class="btn-classic elimina" data-action="elimina"><i class="fa-solid fa-trash"></i></a>
+                        <a href="#" class="btn-classic elimina" data-action="elimina" data-event-id="<?php echo $event->id; ?>"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 <?php else : ?>
                     <a href="#" class="btn btn-evento"><strong>Join</strong></a>
@@ -104,7 +105,7 @@ $success_message = $session->getSuccessMessage();
             <span class="popup-close" id="popup-close-button-crea" data-action="chiudi"><i class="fa-solid fa-xmark"></i></span>
         </div>
         <form id="crea-evento-form" method="POST" action="formActions/addEventAction.php">
-            <!-- Campi del modulo per la creazione dell'evento -->
+
             <div class="field">
                 <label for="nome_evento">Inserisci il nome dell'evento</label>
                 <input type="text" name="nome_evento" placeholder="Nome dell'evento" required>
@@ -113,8 +114,8 @@ $success_message = $session->getSuccessMessage();
                 <label for="partecipanti">Seleziona i partecipanti</label>
                 <div class="checkbox-container">
                     <?php
-                    // Ottieni la lista degli utenti dal database
-                    $users = $connector->getAllUsers(); // Assumi che ci sia una funzione per ottenere gli utenti
+                    // Ottiene la lista degli utenti dal database
+                    $users = $connector->getAllUsers();
 
                     if (!empty($users)) {
                         foreach ($users as $user) {
@@ -129,7 +130,7 @@ $success_message = $session->getSuccessMessage();
                 <label for="date">Seleziona data</label>
                 <input type="datetime-local" name="data_evento" required>
             </div>
-            <!-- Altri campi del modulo, se necessario -->
+
             <input class="btn" type="submit" value="crea evento"></input>
         </form>
     </div>
@@ -173,34 +174,13 @@ $success_message = $session->getSuccessMessage();
             <h2>Elimina evento.</h2>
             <span class="popup-close" id="popup-close-button-elimina" data-action="chiudi"><i class="fa-solid fa-xmark"></i></span>
         </div>
-        <form id="crea-evento-form" method="POST" action="formActions/addEventAction.php">
-            <!-- Campi del modulo per la creazione dell'evento -->
-            <div class="field">
-                <label for="nome_evento">Inserisci il nome dell'evento</label>
-                <input type="text" name="nome_evento" placeholder="Nome dell'evento" required>
-            </div>
-            <div class="field">
-                <label for="partecipanti">Seleziona i partecipanti</label>
-                <div class="checkbox-container">
-                    <?php
-                    // Ottieni la lista degli utenti dal database
-                    $users = $connector->getAllUsers(); // Assumi che ci sia una funzione per ottenere gli utenti
+        <p class="spacer-10">Sicuro di voler eliminare questo evento?</p>
+        <form id="crea-evento-form" method="POST" action="formActions/deleteEventAction.php">
 
-                    if (!empty($users)) {
-                        foreach ($users as $user) {
-                            // Genera una checkbox per ciascun utente
-                            echo '<label class="select-label"><input type="checkbox" name="partecipanti[]" value="' . $user['email'] . '">' . $user['nome'] . ' ' . $user['cognome'] . '</label>';
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
-            <div class="field">
-                <label for="date">Seleziona data</label>
-                <input type="datetime-local" name="data_evento" required>
-            </div>
-            <!-- Altri campi del modulo, se necessario -->
-            <input class="btn" type="submit" value="crea evento"></input>
+            <input type="hidden" name="event_id" value="<?php echo $event->id; ?>">
+            <input type="hidden" name="user" value="<?php echo $this->user; ?>">
+
+            <input class="btn" type="submit" value="elimina evento"></input>
         </form>
     </div>
 </div>
