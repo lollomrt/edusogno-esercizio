@@ -23,28 +23,13 @@ if ($user == false) {
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ricevi i dati dal form
-    $eventName = $_POST['nome_evento'];
-    $eventDate = $_POST['data_evento'];
-    $attendees = $_POST['partecipanti'];
+$error_message = $session->getErrorMessage();
 
-    // Chiama la funzione addEvent del tuo EventController
-    $eventController = new EventController($connector);
-    $success = $eventController->addEvent($attendees, $eventName, $eventDate);
-
-    if ($success) {
-        // L'aggiunta è riuscita, puoi reindirizzare l'utente o fare altre azioni
-        header("Location: ?page=dashboard.php");
-        exit();
-    } else {
-        // Se l'aggiunta ha causato un errore, gestiscilo in modo appropriato
-        // Ad esempio, impostando un messaggio di errore da visualizzare sulla pagina
-        $error_message = "Errore durante l'aggiunta dell'evento.";
-    }
-}
+// Verifica se esiste una variabile di sessione 'success_message' per i messaggi di successo
+$success_message = $session->getSuccessMessage();
 
 ?>
+
 
 <?php if ($user['admin'] == 1) : ?>
     <div class="page-title admin-flex">
@@ -54,6 +39,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php else : ?>
     <div class="page-title">
         <h1>Ciao <?php echo $user['name']; ?>, ecco i tuoi eventi</h1>
+    </div>
+<?php endif; ?>
+
+<!-- Display Errorin -->
+<?php if (!empty($error_message)) : ?>
+    <div class="error-message">
+        <?php echo $error_message; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($success_message)) : ?>
+    <div class="success-message">
+        <?php echo $success_message; ?>
     </div>
 <?php endif; ?>
 
@@ -126,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="field">
                 <label for="date">Seleziona data</label>
-                <input type="date" name="data_evento" required>
+                <input type="datetime-local" name="data_evento" required>
             </div>
             <!-- Altri campi del modulo, se necessario -->
             <input class="btn" type="submit" value="crea evento"></input>

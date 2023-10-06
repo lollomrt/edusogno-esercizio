@@ -11,7 +11,6 @@ $error_message = $session->getErrorMessage();
     <h1>Crea il tuo account</h1>
 </div>
 
-<!-- Aggiungi questo blocco di codice prima del tuo modulo di login -->
 <?php if (!empty($error_message)) : ?>
     <div class="error-message">
         <?php echo $error_message; ?>

@@ -33,15 +33,7 @@ class EventController
     // Aggiunta evento
     public function addEvent($attendees, $eventName, $eventDate)
     {
-
         try {
-            // Verifica se i dati dell'evento sono validi prima di procedere
-            if (empty($attendees) || empty($eventName) || empty($eventDate)) {
-                throw new Exception("I dati dell'evento non sono validi.");
-            }
-
-
-
             // Converte l'array $attendees in una stringa separata da virgole
             $attendeesString = implode(',', $attendees);
 
@@ -50,19 +42,13 @@ class EventController
 
             if ($success) {
                 // Se l'aggiunta è riuscita, ricarica la pagina
-                header("Location: ?page=dashboard.php");
-                exit();
+                return true;
             } else {
                 throw new Exception("Errore nell'inserimento dell'evento nel database.");
             }
         } catch (Exception $e) {
-            // Gestisci l'errore in modo appropriato
-            $session = new Session();
-            $session->setErrorMessage($e->getMessage());
 
-            // Se l'aggiunta ha causato un errore, rimani sulla stessa pagina
-            header("Location: dashboard.php");
-            exit();
+            return false;
         }
     }
 

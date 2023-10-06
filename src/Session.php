@@ -54,7 +54,7 @@ class Session
     {
         if ($this->hasError()) {
             $error_message = $this->getSession()['error_message'];
-            // Rimuovi la variabile di sessione dopo averla utilizzata
+            // Rimuove la variabile di sessione dopo averla utilizzata
             unset($_SESSION['error_message']);
         } else {
             $error_message = "";
@@ -92,7 +92,7 @@ class Session
     {
         if ($this->hasSuccess()) {
             $success_message = $this->getSession()['success_message'];
-            // Rimuovi la variabile di sessione dopo averla utilizzata
+            // Rimuove la variabile di sessione dopo averla utilizzata
             unset($_SESSION['success_message']);
         } else {
             $success_message = "";

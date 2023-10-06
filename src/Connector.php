@@ -58,7 +58,7 @@ class Connector
                 throw new Exception("Errore nell'inserimento dell'evento nel database.");
             }
         } catch (PDOException $e) {
-            // Gestisci l'errore in modo appropriato
+            // Gestisce l'errore
             throw new Exception("Errore nell'aggiunta dell'evento: " . $e->getMessage());
         }
     }
@@ -121,13 +121,13 @@ class Connector
 
     public function getUserName($user_id)
     {
-        // Esegui una query SQL per ottenere il nome dell'utente dal database
+        // Esegue una query SQL per ottenere il nome dell'utente dal database
         $query = "SELECT nome, cognome FROM utenti WHERE id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Estrai il nome dell'utente
+        // Estrae il nome dell'utente
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
@@ -139,13 +139,13 @@ class Connector
 
     public function getUserADmin($user_id)
     {
-        // Esegui una query SQL per ottenere il nome dell'utente dal database
+        // Esegue una query SQL per ottenere il nome dell'utente dal database
         $query = "SELECT admin FROM utenti WHERE id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Estrai il nome dell'utente
+        // Estrae il nome dell'utente
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
@@ -157,12 +157,12 @@ class Connector
 
     public function getAllUsers()
     {
-        // Esegui una query SQL per ottenere il nome dell'utente dal database
+        // Esegue una query SQL per ottenere il nome dell'utente dal database
         $query = "SELECT * FROM utenti";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
-        // Estrai il nome dell'utente
+        // Estrae il nome dell'utente
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($result) {
@@ -176,7 +176,7 @@ class Connector
     public function createPasswordResetToken($email)
     {
 
-        $token = bin2hex(random_bytes(32)); // Esempio di generazione di un token
+        $token = bin2hex(random_bytes(32)); // Generazione di un token
 
         date_default_timezone_set('Europe/Rome');
 
@@ -187,13 +187,13 @@ class Connector
             $sql = "INSERT INTO password_reset_tokens (user_email, token, expiry) VALUES (:email, :token, :expiry)";
             $stmt = $this->conn->prepare($sql);
 
-            // Esegui l'inserimento dei dati
+            // Esegue l'inserimento dei dati
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':token', $token);
             $stmt->bindParam(':expiry', $tokenExpiry);
 
             if ($stmt->execute()) {
-                return $token; // Restituisci true se l'inserimento ha avuto successo
+                return $token; // Restituisce true se l'inserimento ha avuto successo
             } else {
                 // Errore nell'inserimento
                 echo "\nPDOStatement::errorInfo():\n";
