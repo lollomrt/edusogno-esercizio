@@ -24,24 +24,53 @@ function togglePasswordVisibility(index) {
 
 // Script per la gestione dell'apertura7chiusura popup dasboard
 
-// Funzione per aprire il popup
-function openPopup() {
-    document.getElementById("popup-crea-evento").style.display = "flex";
+// Funzione per aprire il popup e impostare il contenuto in base all'azione
+function openPopup(action) {
+    let popup = document.getElementById('popup-dashboard');
+    let creaEventoDiv = document.getElementById('popup-crea-evento');
+    let eliminaEventoDiv = document.getElementById('popup-elimina-evento');
+    let modificaEventoDiv = document.getElementById('popup-modifica-evento');
+
+    // Nasconde tutti i div del popup
+    creaEventoDiv.style.display = 'none';
+    eliminaEventoDiv.style.display = 'none';
+    modificaEventoDiv.style.display = 'none';
+
+    switch (action) {
+        case 'crea':
+            creaEventoDiv.style.display = 'block';
+            break;
+        case 'elimina':
+            eliminaEventoDiv.style.display = 'block';
+            break;
+        case 'modifica':
+            modificaEventoDiv.style.display = 'block';
+            break;
+        default:
+            // Azione non riconosciuta
+            break;
+    }
+
+    // Visualizza il popup
+    popup.style.display = 'flex';
 }
 
 // Funzione per chiudere il popup
 function closePopup() {
-    document.getElementById("popup-crea-evento").style.display = "none";
+    let popup = document.getElementById('popup-dashboard');
+    popup.style.display = 'none';
 }
 
-// Ascolta il clic sul pulsante "Crea evento" e apri il popup
-document.getElementById("crea-evento-button").addEventListener("click", function (event) {
-    event.preventDefault(); // Impedisce il comportamento predefinito del link
-    openPopup();
-});
-
-// Ascolta il clic sul pulsante di chiusura del popup
-document.getElementById("popup-close-button").addEventListener("click", function (event) {
-    event.preventDefault();
-    closePopup();
+// Aggiunta gestori di eventi delegati per i pulsanti
+let actionButtons = document.querySelectorAll('[data-action]');
+actionButtons.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+        event.preventDefault(); // Evita il comportamento predefinito del link
+        let action = this.getAttribute('data-action');
+        if (action === 'chiudi') {
+            closePopup();
+        } else {
+            openPopup(action);
+        }
+    });
 });
