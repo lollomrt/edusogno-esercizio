@@ -150,7 +150,6 @@ form input[type=submit],
 form input[type=submit]:hover,
 .btn-evento:hover,
 .container-form .btn-classic:hover,
-.button-list .btn-classic:hover,
 .admin-flex .btn-classic:hover {
     background-color: #000;
     cursor: pointer;
@@ -336,12 +335,18 @@ form input[type=submit]:hover,
     align-items: center;
 }
 
-.modifica {
+
+.button-list .btn-classic {
+    background-color: #fff;
+    color: #134077;
+}
+
+.modifica:hover {
     background-color: #fedd56;
     color: #000;
 }
 
-.elimina {
+.elimina:hover {
     background-color: #fe4547;
     color: #fff;
 }

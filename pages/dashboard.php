@@ -23,6 +23,8 @@ if ($user == false) {
     }
 }
 
+$no_events_message = "Nessun evento disponibile al momento.";
+
 $error_message = $session->getErrorMessage();
 
 // Verifica se esiste una variabile di sessione 'success_message' per i messaggi di successo
