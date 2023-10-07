@@ -63,6 +63,30 @@ class Connector
         }
     }
 
+    public function deleteEventById($eventId)
+    {
+        try {
+            $query = "DELETE FROM eventi WHERE id = :eventId";
+            // Prepara la query SQL
+            $stmt = $this->conn->prepare($query);
+            // Associa il valore dell'ID dell'evento alla query
+            $stmt->bindParam(':eventId', $eventId);
+            // Esegue la query per eliminare l'evento
+            $stmt->execute();
+
+            // Verifica se l'evento è stato eliminato con successo
+            if ($stmt->rowCount() > 0) {
+                return true; // Restituisce true se l'eliminazione è riuscita
+            } else {
+                return false; // Restituisce false se l'eliminazione non ha avuto successo
+            }
+        } catch (PDOException $e) {
+
+            error_log('Errore durante l\'eliminazione dell\'evento: ' . $e->getMessage());
+            return false; // Restituisce false in caso di errore
+        }
+    }
+
     private function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);

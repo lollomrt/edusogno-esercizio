@@ -9,7 +9,7 @@ $connector->setUpConnection();
 $user = $session->getUserSession();
 
 $eventController = new EventController($connector);
-// $events = $eventController->list();
+$events = $eventController->list();
 
 // Verifica se l'utente è esiste ed è loggato
 if ($user == false) {
@@ -55,6 +55,8 @@ $success_message = $session->getSuccessMessage();
     </div>
 <?php endif; ?>
 
+
+
 <div class="container-eventi">
     <?php if (!empty($no_events_message)) : ?>
         <div class="no-event-container">
@@ -94,7 +96,6 @@ $success_message = $session->getSuccessMessage();
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
-
 
 <!-- Popup -->
 
@@ -139,7 +140,7 @@ $success_message = $session->getSuccessMessage();
             <h2>Modifica evento</h2>
             <span class="popup-close" id="popup-close-button-modifica" data-action="chiudi"><i class="fa-solid fa-xmark"></i></span>
         </div>
-        <form id="crea-evento-form" method="POST" action="formActions/addEventAction.php">
+        <form id="modifica-evento-form" method="POST" action="formActions/addEventAction.php">
             <!-- Campi del modulo per la creazione dell'evento -->
             <div class="field">
                 <label for="nome_evento">Inserisci il nome dell'evento</label>
@@ -175,10 +176,10 @@ $success_message = $session->getSuccessMessage();
             <span class="popup-close" id="popup-close-button-elimina" data-action="chiudi"><i class="fa-solid fa-xmark"></i></span>
         </div>
         <p class="spacer-10">Sicuro di voler eliminare questo evento?</p>
-        <form id="crea-evento-form" method="POST" action="formActions/deleteEventAction.php">
+        <form id="elimina-evento-form" method="POST" action="formActions/deleteEventAction.php">
 
             <input type="hidden" name="event_id" value="<?php echo $event->id; ?>">
-            <input type="hidden" name="user" value="<?php echo $this->user; ?>">
+
 
             <input class="btn" type="submit" value="elimina evento"></input>
         </form>

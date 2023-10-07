@@ -1,3 +1,5 @@
+console.log('Script JavaScript in esecuzione');
+
 const passwordInputs = document.querySelectorAll(".password-input");
 const toggleButtons = document.querySelectorAll(".toggle-password-visibility");
 
@@ -78,3 +80,5 @@ actionButtons.forEach(function (button) {
         }
     });
 });
+
+

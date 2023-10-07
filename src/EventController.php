@@ -61,10 +61,21 @@ class EventController
     }
 
     // Eliminazione evento
-    public function deleteEvent($id)
+    function deleteEvent($eventId, $user)
     {
-        if (isset($this->events[$id])) {
-            unset($this->events[$id]);
+        // Controllo se l'utente ha i permessi per eliminare l'evento
+        if ($user['admin'] == 1) {
+            $connector = new Connector();
+            $connector->setUpConnection();
+
+            // Eseguo l'eliminazione dell'evento dal database
+            $result = $connector->deleteEventById($eventId);
+
+            // Restituisco true se l'eliminazione è riuscita, altrimenti false
+            return $result;
+        } else {
+            // L'utente non ha i permessi per eliminare l'evento
+            return false;
         }
     }
 }
