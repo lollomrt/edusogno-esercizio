@@ -23,6 +23,7 @@ class EventController
                 $events[] = new Event($dbEvent['id'], $attendees, $dbEvent['nome_evento'], $dbEvent['data_evento']);
             }
 
+
             return $events;
         } catch (Exception $e) {
             echo "Errore nel recupero degli eventi: " . $e->getMessage();

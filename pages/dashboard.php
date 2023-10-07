@@ -11,6 +11,8 @@ $user = $session->getUserSession();
 $eventController = new EventController($connector);
 $events = $eventController->list();
 
+$no_events_message = "";
+
 // Verifica se l'utente è esiste ed è loggato
 if ($user == false) {
     header("Location: index.php");
@@ -21,9 +23,12 @@ if ($user == false) {
     } else {
         $events = $eventController->list();
     }
+
+    if (empty($events)) {
+        $no_events_message = "Non hai eventi assegnati.";
+    }
 }
 
-$no_events_message = "Nessun evento disponibile al momento.";
 
 $error_message = $session->getErrorMessage();
 
