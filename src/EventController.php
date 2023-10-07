@@ -53,10 +53,19 @@ class EventController
     }
 
     // Modifica evento
-    public function editEvent($id, $event)
+    public function editEvent($id, $attendees, $eventName, $eventDate)
     {
-        if (isset($this->events[$id])) {
-            $this->events[$id] = $event;
+        try {
+            // Converte l'array $attendees in una stringa separata da virgole
+            $attendeesString = implode(',', $attendees);
+
+            // Chiama il metodo di Connector per inserire l'evento nel database
+            $success = $this->conn->updateEvent($id, $attendeesString, $eventName, $eventDate);
+
+            return $success;
+        } catch (Exception $e) {
+            // Gestisci l'eccezione qui se necessario
+            return false;
         }
     }
 

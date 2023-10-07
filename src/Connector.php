@@ -48,7 +48,7 @@ class Connector
             $stmt->bindParam(":nome_evento", $eventName);
             $stmt->bindParam(":data_evento", $eventDate);
 
-            // Esegui la query
+            // Esegue la query
             $stmt->execute();
 
             // Verifica se l'inserimento è riuscito
@@ -60,6 +60,37 @@ class Connector
         } catch (PDOException $e) {
             // Gestisce l'errore
             throw new Exception("Errore nell'aggiunta dell'evento: " . $e->getMessage());
+        }
+    }
+
+    public function updateEvent($id, $attendees, $eventName, $eventDate)
+    {
+
+        try {
+            // Prepara la query SQL per l'aggiornamento dell'evento
+            $query = "UPDATE eventi SET attendees = :attendees, nome_evento = :name, data_evento = :date WHERE id = :eventId";
+
+            // Prepara la dichiarazione SQL
+            $stmt = $this->conn->prepare($query);
+
+            // Associa i parametri
+            $stmt->bindParam(":attendees", $attendees);
+            $stmt->bindParam(":name", $eventName);
+            $stmt->bindParam(":date", $eventDate);
+            $stmt->bindParam(":eventId", $id);
+
+            // Esegui la query
+            $stmt->execute();
+
+            // Verifica se l'aggiornamento è riuscito
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                throw new Exception("Errore nell'aggiornamento dell'evento nel database.");
+            }
+        } catch (PDOException $e) {
+            // Gestisce l'errore
+            throw new Exception("Errore nell'aggiornamento dell'evento nel database: " . $e->getMessage());
         }
     }
 

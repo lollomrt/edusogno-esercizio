@@ -86,7 +86,7 @@ $success_message = $session->getSuccessMessage();
                 </div>
                 <?php if ($user['admin'] == 1) : ?>
                     <div class="lista-partecipanti button-list">
-                        <a href="#" class="btn-classic modifica" data-action="modifica"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="#" class="btn-classic modifica" data-action="modifica" data-event='<?php echo json_encode($event); ?>' data-event-id="<?php echo $event->id; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a href="#" class="btn-classic elimina" data-action="elimina" data-event-id="<?php echo $event->id; ?>"><i class="fa-solid fa-trash"></i></a>
                     </div>
                 <?php else : ?>
@@ -140,8 +140,9 @@ $success_message = $session->getSuccessMessage();
             <h2>Modifica evento</h2>
             <span class="popup-close" id="popup-close-button-modifica" data-action="chiudi"><i class="fa-solid fa-xmark"></i></span>
         </div>
-        <form id="modifica-evento-form" method="POST" action="formActions/addEventAction.php">
+        <form id="modifica-evento-form" method="POST" action="formActions/editEventAction.php">
             <!-- Campi del modulo per la creazione dell'evento -->
+            <input type="hidden" name="event_id" value="<?php echo $event->id; ?>">
             <div class="field">
                 <label for="nome_evento">Inserisci il nome dell'evento</label>
                 <input type="text" name="nome_evento" placeholder="Nome dell'evento" required>
@@ -167,7 +168,7 @@ $success_message = $session->getSuccessMessage();
                 <input type="datetime-local" name="data_evento" required>
             </div>
             <!-- Altri campi del modulo, se necessario -->
-            <input class="btn" type="submit" value="crea evento"></input>
+            <input class="btn" type="submit" value="Modifica evento"></input>
         </form>
     </div>
     <div id="popup-elimina-evento" class="popup-content container-form">

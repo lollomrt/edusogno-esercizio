@@ -27,8 +27,8 @@ function togglePasswordVisibility(index) {
 // Script per la gestione dell'apertura7chiusura popup dasboard
 
 // Funzione per aprire il popup e impostare il contenuto in base all'azione
+// Funzione per aprire il popup e impostare il contenuto in base all'azione e all'evento
 function openPopup(action, eventId) {
-    console.log('ID dell\'evento:', eventId);
     let popup = document.getElementById('popup-dashboard');
     let creaEventoDiv = document.getElementById('popup-crea-evento');
     let eliminaEventoDiv = document.getElementById('popup-elimina-evento');
@@ -49,6 +49,26 @@ function openPopup(action, eventId) {
             eliminaEventoDiv.style.display = 'block';
             break;
         case 'modifica':
+            // Ottieni i dati dell'evento dall'attributo data-event del pulsante
+            let eventData = JSON.parse(document.querySelector(`[data-event-id="${eventId}"]`).getAttribute('data-event'));
+            document.querySelector('#popup-modifica-evento input[name="event_id"]').value = eventData.id;
+            document.querySelector('#popup-modifica-evento input[name="nome_evento"]').value = eventData.name;
+
+            // Popola le checkbox dei partecipanti
+            let checkboxes = document.querySelectorAll('#popup-modifica-evento input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                if (eventData.attendees.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+
+            // Popola la data dell'evento
+            let dateInput = document.querySelector('#popup-modifica-evento input[name="data_evento"]');
+            dateInput.value = eventData.date;
+
+            // Imposta altri campi del modulo di modifica con i dati dell'evento, se necessario
             modificaEventoDiv.style.display = 'block';
             break;
         default:

@@ -10,23 +10,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $connector->setUpConnection();
 
     // Riceve i dati dal form
+    $id = $_POST['event_id'];
     $attendees = $_POST['partecipanti'];
     $eventName = $_POST['nome_evento'];
     $eventDate = $_POST['data_evento'];
 
-    if (empty($attendees) || empty($eventName) || empty($eventDate)) {
+    if (empty($id) || empty($attendees) || empty($eventName) || empty($eventDate)) {
         header("Location:" . APP_URL . "?page=dashboard");
         $session->setErrorMessage("Devi compilare tutti i campi!.");
         exit();
     } else {
         // Chiama la funzione addEvent del tuo EventController
         $eventController = new EventController($connector);
-        $success = $eventController->addEvent($attendees, $eventName, $eventDate);
+        $success = $eventController->editEvent($id, $attendees, $eventName, $eventDate);
 
         if ($success) {
             // L'aggiunta è riuscita,  reindirizzara l'utente 
             header("Location:" . APP_URL . "?page=dashboard");
-            $session->setSuccessMessage("Evento creato con successo!");
+            $session->setSuccessMessage("Evento modificato con successo!");
             exit();
         } else {
             // Se l'aggiunta ha causato un errore
