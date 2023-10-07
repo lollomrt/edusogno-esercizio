@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $connector = new Connector();
     $connector->setUpConnection();
 
+    $user = $session->getUserSession();
+
     // Riceve i dati dal form
     $id = $_POST['event_id'];
     $attendees = $_POST['partecipanti'];
@@ -22,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Chiama la funzione addEvent del tuo EventController
         $eventController = new EventController($connector);
-        $success = $eventController->editEvent($id, $attendees, $eventName, $eventDate);
+        $success = $eventController->editEvent($id, $attendees, $eventName, $eventDate, $user);
 
         if ($success) {
             // L'aggiunta è riuscita,  reindirizzara l'utente 

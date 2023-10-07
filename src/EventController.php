@@ -31,40 +31,50 @@ class EventController
     }
 
     // Aggiunta evento
-    public function addEvent($attendees, $eventName, $eventDate)
+    public function addEvent($attendees, $eventName, $eventDate, $user)
     {
         try {
-            // Converte l'array $attendees in una stringa separata da virgole
-            $attendeesString = implode(',', $attendees);
+            // Verifica se l'utente è amministratore
+            if ($user['admin'] == 1) {
+                // Converte l'array $attendees in una stringa separata da virgole
+                $attendeesString = implode(',', $attendees);
 
-            // Chiama il metodo di Connector per inserire l'evento nel database
-            $success = $this->conn->insertEvent($attendeesString, $eventName, $eventDate);
+                // Chiama il metodo di Connector per inserire l'evento nel database
+                $success = $this->conn->insertEvent($attendeesString, $eventName, $eventDate);
 
-            if ($success) {
-                // Se l'aggiunta è riuscita, ricarica la pagina
-                return true;
+                if ($success) {
+                    // Se l'aggiunta è riuscita, ricarica la pagina
+                    return true;
+                } else {
+                    throw new Exception("Errore nell'inserimento dell'evento nel database.");
+                }
             } else {
-                throw new Exception("Errore nell'inserimento dell'evento nel database.");
+                // L'utente non ha i permessi per aggiungere l'evento
+                return false;
             }
         } catch (Exception $e) {
-
             return false;
         }
     }
 
     // Modifica evento
-    public function editEvent($id, $attendees, $eventName, $eventDate)
+    public function editEvent($id, $attendees, $eventName, $eventDate, $user)
     {
         try {
-            // Converte l'array $attendees in una stringa separata da virgole
-            $attendeesString = implode(',', $attendees);
+            // Verifica se l'utente è amministratore
+            if ($user['admin'] == 1) {
+                // Converte l'array $attendees in una stringa separata da virgole
+                $attendeesString = implode(',', $attendees);
 
-            // Chiama il metodo di Connector per inserire l'evento nel database
-            $success = $this->conn->updateEvent($id, $attendeesString, $eventName, $eventDate);
+                // Chiama il metodo di Connector per inserire l'evento nel database
+                $success = $this->conn->updateEvent($id, $attendeesString, $eventName, $eventDate);
 
-            return $success;
+                return $success;
+            } else {
+                // L'utente non ha i permessi per modificare l'evento
+                return false;
+            }
         } catch (Exception $e) {
-            // Gestisci l'eccezione qui se necessario
             return false;
         }
     }
